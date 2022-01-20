@@ -1,0 +1,26 @@
+﻿@model IEnumerable<EventFool.Domain.Models.Photo>
+
+@{
+    ViewBag.Title = "PhotosCreated";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>PhotosCreated</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            <img src="@Url.Content("~/Uploads/"+User.Identity.Name+ "/"+ item.Image)"height="280" width="419" class="rounded-3" alt="No Event Profile Picture Selected"/>
+        </td>
+    </tr>
+}
+
+</table>

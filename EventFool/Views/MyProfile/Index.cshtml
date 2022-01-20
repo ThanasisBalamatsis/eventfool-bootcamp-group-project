@@ -1,0 +1,134 @@
+﻿@model EventFool.Domain.Models.ApplicationUser
+@section style{
+    <link rel="stylesheet" href="@Url.Content("~/Content/Body.css")" type="text/css" />
+    <link rel="stylesheet" href="@Url.Content("~/Content/CreateEvent.css")" type="text/css" />
+    <link rel="stylesheet" href="@Url.Content("~/Content/Background.css")" />
+}
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+<div class="container col-7 justify-content-center">
+    <br />
+    <br />
+    <br />
+    <br />
+    <div class="col-md justify-content-center">
+        <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 h-md-250 shadow bg-white">
+
+            @if (System.IO.File.Exists(HttpContext.Current.Server.MapPath($"~/Uploads/{User.Identity.Name}/{Model.ProfilePhoto}")))
+            {
+                <div class="col-auto d-none d-lg-block">
+                    <img src="@Url.Content("~/Uploads/"+User.Identity.Name+ "/"+ Model.ProfilePhoto)" alt="mdo" width="419" height="280" class="m-lg-5 rounded-3">
+                </div>
+            }
+            else
+            {
+                <div class="col-auto d-none d-lg-block">
+                    <img src="@Url.Content("~/Uploads/unknown.png")" alt="mdo" width="419" height="280" class="m-lg-5 rounded-3">
+                </div>
+            }
+
+
+            <div class="col p-4 d-flex flex-column position-static text-center">
+                <h5><strong class="d-inline-block mt-2" style="color:rgb(4, 156, 167);">My Profile</strong></h5>
+                <h2 class="mb-0 mt-2"><strong>@Model.FirstName @Model.LastName</strong></h2>
+                <div class="mb-1 mt-4 text-muted">Birthday: <strong>@Model.Birthdate.ToShortDateString()</strong></div>
+                <div class="mb-1 text-muted">Gender: <strong>@Model.Gender</strong></div>
+                <div class="mb-1 text-muted">Address: <strong>@Model.Address</strong></div>
+                <div class="mb-1 text-muted">Events Created: <strong> @Model.EventsOrganised.Count</strong></div>
+                <div class="mb-1 text-muted">Events Attended: <strong>@Model.Tickets.Count</strong></div>
+                @Html.ActionLink("Update Profile Info", "Update", "MyProfile", Model, new { @class = "btn btnstyle2 mt-3" })
+            </div>
+
+        </div>
+        <div class="row g-0 py-1 rounded-3 shadow overflow-hidden flex-md-row mb-4 h-md-250 bg-white">
+            <div class="container text-center my-3" height="100" width="100">
+                <h5><strong class="d-inline-block mt-2" style="color:rgb(4, 156, 167);">My Photos</strong></h5>
+                @if (Model.Photos.Count == 0)
+                {
+                    <div class="text-muted"><strong>No photos uploaded</strong></div>
+                }
+                else
+                {
+                    <div class="row mx-auto my-auto">
+                        <div id="recipeCarousel" class="carousel slide" data-bs-ride="carousel">
+                            <div class="carousel-inner" role="listbox">
+                                <div class="carousel-item active">
+                                    <div class="col-md-3 zoom">
+                                        <div class="card ">
+                                            <div class="card-img ">
+                                                <img src="@Url.Content("~/Uploads/"+User.Identity.Name+ "/"+ Model.Photos.ToList()[0].Image)" class="img" height="250" width="400">
+                                            </div>
+                                            <div class="card-img-overlay"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                @for (int i = 1; i < Model.Photos.Count(); i++)
+                                {
+                                    <div class="carousel-item">
+                                        <div class="col-md-3">
+                                            <div class="card">
+                                                <div class="card-img">
+                                                    <img src="@Url.Content("~/Uploads/"+User.Identity.Name+ "/"+ Model.Photos.ToList()[i].Image)" class="img" height="250" width="400">
+                                                </div>
+                                                <div class="card-img-overlay"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                            <a class="carousel-control-prev bg-transparent w-aut" href="#" role="button"
+                               data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            </a>
+                            <a class="carousel-control-next bg-transparent w-aut" href="#recipeCarousel" role="button"
+                               data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            </a>
+                        </div>
+                    </div>
+                }
+            </div>
+
+        </div>
+
+
+    </div>
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+</div>
+
+@section scripts {
+    <script>
+        let items = document.querySelectorAll('.carousel .carousel-item')
+
+
+
+        items.forEach((el) => {
+            const minPerSlide = 4
+            let next = el.nextElementSibling
+            for (var i = 1; i < minPerSlide; i++) {
+                if (!next) {
+                    // wrap carousel by using first child
+                    next = items[0]
+                }
+                let cloneChild = next.cloneNode(true)
+                el.appendChild(cloneChild.children[0])
+                next = next.nextElementSibling
+            }
+        })
+    </script>
+}
+
+

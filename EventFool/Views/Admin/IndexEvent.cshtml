@@ -1,0 +1,70 @@
+﻿@model IEnumerable<EventFool.Domain.Models.Event>
+
+@{
+    ViewBag.Title = "Index Event";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section style{
+    <link rel="stylesheet" href="@Url.Content("~/Content/Background.css")" />
+}
+<h2>Index</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StartDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EndDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MinTickets)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MaxTickets)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TicketPrice)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+    </tr>
+
+    @foreach (var myEvent in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => myEvent.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => myEvent.StartDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => myEvent.EndDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => myEvent.MinTickets)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => myEvent.MaxTickets)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => myEvent.TicketPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => myEvent.Description)
+            </td>
+
+            <td>
+                @Html.ActionLink("Edit", "EditEvent", new { id = myEvent.Id }) |
+                @Html.ActionLink("Delete", "DeleteEvent", new { id = myEvent.Id })
+            </td>
+        </tr>
+    }
+
+</table>

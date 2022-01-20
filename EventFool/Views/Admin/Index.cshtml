@@ -1,0 +1,27 @@
+﻿
+@{
+    ViewBag.Title = "Platform";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section style{
+    <link rel="stylesheet" href="@Url.Content("~/Content/Background.css")" />
+}
+
+<h2>Platform</h2>
+
+
+<table class="table">
+
+    <tr>
+        <td>
+            @Html.ActionLink("Category", "IndexCategory") |
+            @Html.ActionLink("Location", "IndexLocation") |
+            @Html.ActionLink("User", "IndexUser") |
+            @Html.ActionLink("Ticket", "IndexTicket") |
+            @Html.ActionLink("Event", "IndexEvent")
+        </td>
+    </tr>
+
+</table>
+

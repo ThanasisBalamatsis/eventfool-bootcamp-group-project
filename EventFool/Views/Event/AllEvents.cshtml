@@ -1,0 +1,43 @@
+﻿@model List<EventFool.Domain.Models.Event>
+@{
+    ViewBag.Title = "All";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section style{
+    <link rel="stylesheet" href="@Url.Content("~/Content/Background.css")" />
+    }
+<h2>All Events</h2>
+<table>
+    <tr>
+        @foreach (var myEvent in Model)
+        {
+
+            <div class="card shadow col">
+                @*<svg class="bd-placeholder-img card-img-top" width="100%" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c" /><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>*@
+                <img src="@Url.Content("~/Uploads/"+User.Identity.Name+ "/"+ myEvent.ProfilePhoto)" height="280" width="419" class="" style=" width:100%" alt="No Event Profile Picture Selected" />
+                <div class="card-body bg-dark text-white fw-bold">
+                    <div class="card-text">@Html.DisplayFor(model => myEvent.Name)</div>
+                    @*<div><small class="text-muted">@Html.DisplayFor(model => myEven)</small></div>*@
+                    <div><small class="text-muted">@Html.DisplayFor(model => myEvent.StartDate.Date)</small></div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="btn-group">
+                            @Html.ActionLink("Purchase", "PaymentWithPaypal", "Ticket", myEvent, new { @class = "btn btn-sm btn-outline-secondary" })
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        }
+    </tr>
+</table>
+
+
+
+
+
+
+
+
+

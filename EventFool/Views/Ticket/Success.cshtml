@@ -1,0 +1,35 @@
+﻿
+@model EventFool.Domain.Models.Ticket
+
+
+@{
+    ViewBag.Title = "Success";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section style{
+    <link rel="stylesheet" href="@Url.Content("~/Content/Background.css")" />
+}
+@*<h2>Success</h2>*@
+<br />
+<br />
+<br />
+<br />
+<script>alert('Your Payment is successful ');</script>
+@Html.HiddenFor(x => x.Id)
+@Html.HiddenFor(x => x.PayPalReference)
+
+<div class="container justify-content-center mt-5">
+    
+    <img src="@Url.Content($"~/Uploads/{User.Identity.Name}/Tickets/{Model.QRCode}")"height="200" width="200" />
+
+    
+    <div class="row">
+    @Html.ActionLink("View Your Tickets", "Attended", "MyEvents","" , new { @class = "btn btnstyle2 px-5" })
+
+    </div>
+    <h3 class="mt-3"><strong>Your Payment is successful</strong></h3>
+
+</div>
+
+
+

@@ -1,0 +1,124 @@
+﻿
+@{ ViewBag.Title = "Profile";
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
+@model EventFool.ViewModels.EventProfileViewModel
+
+@section style
+{
+    <link rel="stylesheet" href="@Url.Content("~/Content/CreateEvent.css")" type="text/css" />
+    <link rel="stylesheet" href="@Url.Content("~/Content/Background.css")" />
+}
+
+<style>
+    img.zoom {
+        width: 100px;
+        height: 100px;
+        -webkit-transition: all .2s ease-in-out;
+        -moz-transition: all .2s ease-in-out;
+        -o-transition: all .2s ease-in-out;
+    }
+
+    .transition {
+        -webkit-transform: scale(1.8);
+        -moz-transform: scale(1.8);
+        -o-transform: scale(1.8);
+        transform: scale(1.8);
+    }
+</style>
+
+<div class="container-md rounded-3 bg-light shadow mt-5 mb-0 col-8">
+    <div class="row">
+        <div class="container col-8" style="padding-left:0; padding-right:0;">
+            @if (Model.ProfilePhoto == null)
+            {
+                <img src="@Url.Content("~/Uploads/unknown.png")" height="280" width="419" class="" style=" width:100%" alt="No Event Profile Picture Selected" /> }
+            else
+            {
+                <img src="@Url.Content("~/Uploads/"+Model.UserName+ "/"+ Model.ProfilePhoto)" height="280" width="419" class="img-fluid w-100 h-100" alt="No Event Profile Picture Selected" />}
+        </div>
+        <div class="container col-4" style="background: linear-gradient(20deg, rgba(210,210,210,1) 12%, rgba(255,255,255,1) 100%); ">
+            <p><h3 class="text-center">@Model.Name</h3></p>
+            <dl class="row">
+                <dt class="text-start">Date and Time:</dt>
+                <dd>Starts: @Model.StartDate.ToString("dddd, dd MMMM yyyy ") @Model.StartDate.ToString("h:mm tt")</dd>
+                <dd>Ends: @Model.EndDate.ToString("dddd, dd MMMM yyyy ") @Model.EndDate.ToString("h:mm tt")</dd>
+                <dt class="text-start">Location:</dt>
+                <dd>@Model.Location.Name</dd>
+                <dd>@Model.Location.Address</dd>
+                <dt class="text-start">Ticket Price:</dt>
+                <dd>@Model.TicketPrice&euro;</dd>
+                <dt class="text-start">Available tickets:</dt>
+                <dd>@Model.RemainingTickets </dd>
+                <dt class="text-start">Brought to you by:</dt>
+                <dd>@Model.UserName</dd>
+            </dl>
+        </div>
+    </div>
+</div>
+
+<div class="container py-3 shadow rounded-bottom col-8">
+    <div class="row">
+        <div class="container px-5 text-center col-8">
+            <img src="~/images/info-square.svg" alt="Alternate Text" /> @Model.Description
+        </div>
+        <div class="container px-5 text-center justify-content-center col-4">
+            @Html.ActionLink("Purchase", "PaymentWithPaypal", "Ticket", new { EventId = Model.EventId }, new { @class = "btn btn-danger px-5" })
+        </div>
+    </div>
+</div>
+<div class="container col-8 py-5 justify-content-center">
+    <div class="row rounded-3 shadow overflow-hidden mb-4 h-md-250 bg-white">
+        <div class="container text-center my-3" height="100" width="100">
+            <h5><strong class="d-inline-block mt-2" style="color:rgb(4, 156, 167);">Event Photo Gallery</strong></h5>
+            @if (Model.Photos.Count == 0)
+            {
+                <div class="text-muted"><strong>No photos uploaded</strong></div> }
+            else
+            {
+                <div class="row mx-auto my-auto">
+                    <div id="recipeCarousel" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner" role="listbox">
+                            <div class="carousel-item active">
+                                <div class="col-md-3 zoom">
+                                    <div class="card ">
+                                        <div class="card-img ">
+                                            <img src="@Url.Content("~/Uploads/"+User.Identity.Name+ "/"+ Model.Photos.ToList()[0].Image)" class="img" height="250" width="400">
+                                        </div>
+                                        <div class="card-img-overlay"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            @for (int i = 1; i < Model.Photos.Count(); i++)
+                            {
+                                <div class="carousel-item">
+                                    <div class="col-md-3">
+                                        <div class="card">
+                                            <div class="card-img">
+                                                <img src="@Url.Content("~/Uploads/"+User.Identity.Name+ "/"+ Model.Photos.ToList()[i].Image)" class="img" height="250" width="400">
+                                            </div>
+                                            <div class="card-img-overlay"></div>
+                                        </div>
+                                    </div>
+                                </div>}
+                        </div>
+                        <a class="carousel-control-prev bg-transparent w-aut" href="#recipeCarousel" role="button"
+                           data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        </a>
+                        <a class="carousel-control-next bg-transparent w-aut" href="#recipeCarousel" role="button"
+                           data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        </a>
+                    </div>
+                </div>}
+        </div>
+
+    </div>
+</div>
+
+
+@section scripts{
+    <script src="~/Scripts/Carousel.js"></script>
+}
+
+

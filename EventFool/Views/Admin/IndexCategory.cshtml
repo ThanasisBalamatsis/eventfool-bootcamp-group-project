@@ -1,0 +1,36 @@
+﻿@model IEnumerable<EventFool.Domain.Models.Category>
+
+@{
+    ViewBag.Title = "Index Category";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section style{
+    <link rel="stylesheet" href="@Url.Content("~/Content/Background.css")" />
+}
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "CreateCategory")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+    </tr>
+
+    @foreach (var category in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => category.Name)
+            </td>
+
+            <td>
+                @Html.ActionLink("Edit", "EditCategory", new { id = category.Id }) |
+                @Html.ActionLink("Delete", "DeleteCategory", new { id = category.Id })
+            </td>
+        </tr>
+    }
+
+</table>

@@ -1,0 +1,39 @@
+﻿<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+    @if (Model != null)
+    {
+        foreach (var myEvent in Model)
+        {
+
+            <div class="col rounded-3 ">
+                <div class="card shadow  ">
+                    @if (myEvent.ProfilePhoto == null)
+                    {
+                        <img src="@Url.Content("~/Uploads/unknown.png")"  height="280" width="419" class="" style=" width:100%" alt="No Event Profile Picture Selected" />
+                    }
+                    else
+                    {
+                        <img src="@Url.Content("~/Uploads/"+User.Identity.Name+ "/"+ myEvent.ProfilePhoto)" height="280" width="419" class="" style=" width:100%" alt="No Event Profile Picture Selected" />
+                    }
+                    <div class="card-body bg-dark text-white fw-bold ">
+                        <div class="card-text">@myEvent.Name</div>
+                        <div><small class="text-muted">@myEvent.LocationName</small></div>
+                        <div><small class="text-muted">@myEvent.StartDate</small></div>
+                        <div><small class="text-muted">@myEvent.TicketPrice&#128;</small></div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                                @Html.ActionLink("Event Profile", "DetailsPrivate", "Event", new { eventId = myEvent.Id }, new { @class = "btn btn-sm btn-outline-secondary" })
+                                @Html.ActionLink("Update Event", "Update", "Event", new { eventId = myEvent.Id }, new { @class = "btn btn-sm btn-outline-secondary" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <h1 class="mt-3" style="color: #d9d9d9; "><strong>There are no events meeting these criteria</strong></h1>
+    }
+</div>
+
+

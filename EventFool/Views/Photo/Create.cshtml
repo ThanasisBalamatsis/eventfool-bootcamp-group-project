@@ -1,0 +1,57 @@
+﻿
+@model EventFool.Domain.Models.Photo
+@{
+    ViewBag.Title = "Create";
+    Layout = null;
+}
+
+@section style
+{
+    <link rel="stylesheet" href="~/Content/CreateEvent.css" />
+}
+
+<script type="text/javascript">
+    function fileCheck(obj) {
+        var fileExtension = ['jpeg', 'jpg', 'png', 'gif', 'bmp'];
+        if ($.inArray($(obj).val().split('.').pop().toLowerCase(), fileExtension) == -1) {
+            alert("Only '.jpeg','.jpg', '.png', '.gif', '.bmp' formats are allowed.");
+        }
+    }
+</script>
+
+
+@using (Html.BeginForm("Create", "Photo", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+
+        <div class="form-group">
+            <div class="col-lg-4">Browse Files</div>
+            <div class="col-md-10">
+                <input type="file" multiple name="files" id="Files" />
+                <input type="submit" value="Upload" class="btn btnstyle2" />
+                <br />
+                <br />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10 text-success">
+                @ViewBag.UploadStatus
+            </div>
+        </div>
+
+    </div>
+}
+
+
+@section scripts{
+    
+    <script src="~/Scripts/PhotosFileExtension.js"></script>
+    
+    
+    }
+

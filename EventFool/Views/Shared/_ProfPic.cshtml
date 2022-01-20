@@ -1,0 +1,23 @@
+﻿
+@if (Model.ProfPic == null)
+{
+    <img src="@Url.Content("~/Uploads/unknown.png")" alt="mdo" width="40" height="40" class="rounded-circle">
+}
+else if (Directory.Exists(HttpContext.Current.Server.MapPath($"~/Uploads/{User.Identity.Name}")))
+{
+    if (System.IO.File.Exists(HttpContext.Current.Server.MapPath($"~/Uploads/{User.Identity.Name}/{Model.ProfPic}")))
+    {
+        <img src="@Url.Content("~/Uploads/"+User.Identity.Name+"/"+Model.ProfPic)" alt="mdo" width="40" height="40" class="rounded-circle">
+    }
+    else
+    {
+        <img src="@Url.Content("~/Uploads/"+Model.ProfPic)" alt="mdo" width="40" height="40" class="rounded-circle">
+    }
+}
+else
+{
+    <img src="@Url.Content("~/Uploads/unknown.png")" alt="mdo" width="40" height="40" class="rounded-circle">
+}
+
+
+

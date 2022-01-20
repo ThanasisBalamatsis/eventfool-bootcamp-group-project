@@ -1,0 +1,50 @@
+﻿@model EventFool.Domain.Models.Event
+
+@{
+    ViewBag.Title = "Delete Event";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section style{
+    <link rel="stylesheet" href="@Url.Content("~/Content/Background.css")" />
+}
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Event</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayFor(model => model.Name)
+        </dt>
+        <dt>
+            @Html.DisplayFor(model => model.StartDate)
+        </dt>
+        <dt>
+            @Html.DisplayFor(model => model.EndDate)
+        </dt>
+        <dt>
+            @Html.DisplayFor(model => model.MinTickets)
+        </dt>
+        <dt>
+            @Html.DisplayFor(model => model.MaxTickets)
+        </dt>
+        <dt>
+            @Html.DisplayFor(model => model.TicketPrice)
+        </dt>
+        <dt>
+            @Html.DisplayFor(model => model.Description)
+        </dt>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "IndexEvent")
+        </div>
+    }
+</div>

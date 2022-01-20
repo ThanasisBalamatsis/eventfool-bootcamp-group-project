@@ -1,0 +1,74 @@
+﻿
+@model  EventFool.ViewModels.CreateTicketViewModel
+@{
+    ViewBag.Title = "PaymentWithPaypal";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section style{
+    <link rel="stylesheet" href="@Url.Content("~/Content/Background.css")" />
+    }
+<div class="container text-center col-6 border my-5 p-3 shadow justify-content-center">
+    <div class="col-12">
+        @using (Html.BeginForm("PaymentWithPaypal", "Ticket", FormMethod.Post, new { @class = "form-horizontal" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(model => model.Id)
+
+            <div class="form-group py-2">
+                <div class="col-12 ">
+                    <h3 class="text-decoration-underline">
+                        @Html.DisplayFor(model => model.Name)
+                        @Html.HiddenFor(model => model.Name)
+                    </h3>
+
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-12 mx-2 mb-4 ">
+                    <h6>
+                        <img src="~/images/calendar-event.svg" alt="Alternate Text" /> From
+                        @Html.DisplayFor(model => model.StartDate)
+                        @Html.HiddenFor(model => model.StartDate)
+                        - To
+                        @Html.DisplayFor(model => model.EndDate)
+                        @Html.HiddenFor(model => model.EndDate)
+                    </h6>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-12 mx-2 mb-4 ">
+                    @Html.HiddenFor(model => model.Description)
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-12 mx-2 mb-4 ">
+                    <h6>
+                        <img src="~/images/geo-alt.svg" alt="Alternate Text" /> Where:
+                        @Html.DisplayFor(model => model.LocationName)
+                        @Html.HiddenFor(model => model.LocationName)
+                    </h6>
+
+                </div>
+            </div>
+            <div class="col-12 mx-2 mb-4 ">
+                <div class="form-floating">
+                    @Html.HiddenFor(model => model.TicketPrice)
+                </div>
+            </div><div class="form-group">
+                <div class="col-12">
+                    @if (Model.TicketPrice == 0)
+                    {
+                    <button type="submit" class="btn btn-warning">Book free Ticket</button>
+                    }
+                    else
+                    {
+
+                    <button type="submit" class="btn btn-warning">Pay $@((Model.TicketPrice).ToString("0.00")) with PayPal</button>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+</div>
+

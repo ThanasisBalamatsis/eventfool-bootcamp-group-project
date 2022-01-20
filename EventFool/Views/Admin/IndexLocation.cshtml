@@ -1,0 +1,54 @@
+﻿@model IEnumerable<EventFool.Domain.Models.Location>
+
+@{
+    ViewBag.Title = "Index Location";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section style{
+    <link rel="stylesheet" href="@Url.Content("~/Content/Background.css")" />
+}
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "CreateLocation")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Longitude)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Latitude)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Address)
+        </th>
+    </tr>
+
+    @foreach (var category in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => category.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => category.Longitude)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => category.Latitude)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => category.Address)
+            </td>
+
+            <td>
+                @Html.ActionLink("Edit", "EditLocation", new { id = category.Id }) |
+                @Html.ActionLink("Delete", "DeleteLocation", new { id = category.Id })
+            </td>
+        </tr>
+    }
+
+</table>

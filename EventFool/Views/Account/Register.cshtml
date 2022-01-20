@@ -1,0 +1,134 @@
+﻿@model EventFool.Models.RegisterViewModel
+@{
+    ViewBag.Title = "Register";
+}
+@section style
+{
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/dark.css">
+    <link rel="stylesheet" href="@Url.Content("~/Content/Background.css")" />
+}
+
+    <br />
+    <h2 class="text-center mt-3">@ViewBag.Title</h2>
+    <br />
+    <div class="container justify-content-center bg-white col-md-4 border-white shadow">
+        <div class="row align-items-center  text-center mt-3 mb-5">
+            @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal justify-content-center", role = "form", enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+                <h4 class="mt-4">Create a new account</h4>
+                <hr />
+                @Html.ValidationSummary("", new { @class = "text-danger" })
+
+                @*<div class="form-group mt-4">
+                        @Html.LabelFor(m => m.UserName, new { @class = "col-md-2 control-label" })
+                        <div class="col-9 mx-auto">
+                            @Html.TextBoxFor(m => m.UserName, new { @class = "form-control mx-auto" })
+                        </div>
+                    </div>*@
+                <div class="form-group mt-4">
+                    @Html.LabelFor(m => m.FirstName, new { @class = "col-md-2 control-label" })
+                    <div class="col-9 mx-auto">
+                        @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control mx-auto" })
+                    </div>
+                </div>
+                <div class="form-group mt-4">
+                    @Html.LabelFor(m => m.LastName, new { @class = "col-md-2 control-label" })
+                    <div class="col-9 mx-auto">
+                        @Html.TextBoxFor(m => m.LastName, new { @class = "form-control mx-auto" })
+                    </div>
+                </div>
+                <div class="form-group mt-4">
+                    @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+                    <div class="col-9 mx-auto">
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control mx-auto" })
+                    </div>
+                </div>
+                <div class="form-group mt-4">
+                    @Html.LabelFor(m => m.Address, new { @class = "col-md-2 control-label" })
+                    <div class="col-9 mx-auto">
+                        @Html.TextBoxFor(m => m.Address, new { @class = "form-control mx-auto" })
+                    </div>
+                </div>
+                <div class="form-group mt-4">
+                    <div class="container col-6">
+                        <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                            @Html.RadioButtonFor(m => m.Gender, "Male", new { @class = "mx-auto text-center btn-check", @id = "btncheck1" })
+                            <label class="btn btn-outline-dark" for="btncheck1">Male</label>
+                            @Html.RadioButtonFor(m => m.Gender, "Female", new { @class = "mx-auto text-center btn-check", @id = "btncheck2" })
+                            <label class="btn btn-outline-dark" for="btncheck2">Female</label>
+                            @Html.RadioButtonFor(m => m.Gender, "Other", new { @class = "mx-auto text-center btn-check", @id = "btncheck3" })
+                            <label class="btn btn-outline-dark" for="btncheck3">Other</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group mt-4">
+                    @Html.LabelFor(model => model.Birthdate, "Change BirthDate", htmlAttributes: new { @class = "control-label  text-center mb-2" })
+                    <div class="col-9 mx-auto">
+                        @Html.EditorFor(model => model.Birthdate, new { htmlAttributes = new { @class = "form-control datetime py-2 px-4 text-center mx-auto" } })
+                    </div>
+                </div>
+                <div class="form-group mt-4">
+                    @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+                    <div class="col-9 mx-auto">
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control mx-auto" })
+                    </div>
+                </div>
+                <div class="form-group mt-4">
+                    @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
+                    <div class="col-9 mx-auto">
+                        @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control mx-auto" })
+                    </div>
+                </div>
+
+
+                @*<div class="form-group">
+                        <div class="col-lg-2">Browse Files</div>
+                        <div class="col-md-10">
+                            <input type="file" multiple name="files" id="Files" />
+                        </div>
+                    </div>*@
+                @*<button>@Html.ActionLink("Upload Profile Photo", "Create", "Photo", new { @class = "edit" })</button>*@
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10 mx-auto">
+                        <input type="submit" class="w-50 btn text-dark btn-lg btnstyle mt-5 mb-5" value="Register" />
+                    </div>
+                </div>
+                <p class="mb-4">
+                    @Html.ActionLink("Do you already have an account? Login", "Login")
+                </p>
+            }
+        </div>
+
+    </div>
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+        flatpickr(".datetime", {
+            enableTime: false,
+            dateFormat: 'Y-m-d',
+            maxDate: new Date("2008-1-1")
+        });
+    </script>
+    @*<script>
+            $('a.edit').click(function () {
+                var url = $(this).attr('href');
+                window.open(url, "popupWindow", "width=900,height=600,scrollbars=yes");
+                return false;
+            });
+        </script>*@
+
+}
+

@@ -1,0 +1,66 @@
+@model EventFool.Domain.Models.Ticket
+@using EventFool.Services
+
+@{ ViewBag.Title = "TicketDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+@section style{
+    <link href="@Url.Content("~/Content/Ticket.css")" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="@Url.Content("~/Content/Background.css")" />
+}
+<div class="justify-content-center" id="PrintPDF">
+    <section class="container col-12 justify-content-center">
+        <div class="text-center my-4">
+            <h2>TicketDetails</h2>
+        </div>
+        <div class="row justify-content-center">
+            <article class="card fl-left">
+                <section class="date">
+                    <time datetime="23th feb">
+                        <span>@Model.User.FirstName @Model.User.LastName</span>
+                        <span>@Model.Event.StartDate.Day/@Model.Event.StartDate.Month/@Model.Event.StartDate.Year</span>
+                    </time>
+                </section>
+                <section class="card-cont">
+                    <h2>@Model.Event.Name</h2>
+                    <small>Location</small>
+                    <h2> @Model.Event.Location.Name</h2>
+                    <div class="even-date">
+                        <i class="fa fa-calendar"></i>
+                        <time>
+                            <span>@Model.Event.StartDate.Date.ToShortDateString()</span>
+                            <span>Starts at @Model.Event.StartDate.Date.Hour</span>
+                            <span>Ends at @Model.Event.EndDate.Date.Hour</span>
+                        </time>
+                        <div height="120" width="120">
+                            <img src="@Url.Content($"~/Uploads/{User.Identity.Name}/Tickets/{Model.QRCode}",true)" height="100" width="100" />
+                        </div>
+                    </div>
+                    <div class="even-info">
+                        <i class="fa fa-map-marker"></i>
+                        <p>
+                            @Model.Event.Description
+                        </p>
+                    </div>
+                    @using (Html.BeginForm("ExportHTML", "Ticket", FormMethod.Post))
+                    {
+                        <input type="hidden" name="ExportData" />
+                        <input class="btn btn-success mx-5" type="submit" id="btnSubmit" value="Print Ticket" />
+                        @Html.ActionLink("Cancel Ticket", "Cancel", "Ticket", new { ticketId = Model.Id }, new { @class = "btn btn-danger mb-4 mx-3" })
+                    }
+                </section>
+            </article>
+        </div>
+    </section>
+</div>
+
+
+@section scripts{
+    <script>
+        $(function () {
+            $("#btnSubmit").click(function () {
+                $("input[name='ExportData']").val($("#PrintPDF").html());
+            });
+        });
+    </script>
+}

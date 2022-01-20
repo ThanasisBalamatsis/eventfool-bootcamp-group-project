@@ -1,0 +1,58 @@
+﻿
+@{
+    ViewBag.Title = "Events Attended";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model EventFool.ViewModels.FiltersViewModel
+@section style{
+    <link rel="stylesheet" href="@Url.Content("~/Content/Body.css")" type="text/css" />
+    <link rel="stylesheet" href="@Url.Content("~/Content/Background.css")" />
+
+}
+<div class="container-sm py-3 my-5 border shadow" >
+    <h1 class="mt-5 text-center">Attended Events</h1>
+    <div class="row g-3 justify-content-center">
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model)
+            @Html.DropDownListFor(model => model.CategoryId, new SelectList(Model.Categories, "Id", "Name"), "Category", new
+            {
+                @class = "form-select",
+                @style = "background-image:url(/images/card-list.svg);"
+            })
+        </div>
+        <div class="col-3">
+            <select class="form-select" name="day" id="day" style="background-image:url(/images/calendar2-event.svg);">
+                <option value="Day">Day</option>
+                <option value="0">Today</option>
+                <option value="1">Today & Tomorrow</option>
+                <option value="7">This week</option>
+            </select>
+        </div>
+        <div class="col-3">
+            <select class="form-select" name="ticket" id="ticket" style="background-image:url(/images/cash-coin.svg);">
+                <option value="Ticket">Ticket</option>
+                <option value="0.0">Free</option>
+                <option value="20.0">&lt;=20&euro;</option>
+                <option value="50.0">&lt;=50&euro;</option>
+                <option value="100.0">&lt;=100&euro;</option>
+                <option value="200.0">&lt;=200&euro;</option>
+            </select>
+        </div>
+    </div>
+</div>
+<div class="album py-5" ">
+    <div class="container" id="divAlbum">
+        <div id="partial">
+            @Html.Partial("_EventsTable", new List<EventFool.ViewModels.FilteredEventsViewModel>())
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/Scripts/myEventsFilters.js"></script>
+}
+
+
+
+

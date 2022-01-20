@@ -1,0 +1,299 @@
+﻿@model EventFool.ViewModels.UpdateUserViewModel
+@{
+    ViewBag.Title = "Update";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section style
+{
+    <link rel="stylesheet" href="~/Content/CreateEvent.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/dark.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/solid.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/svg-with-js.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="@Url.Content("~/Content/Background.css")" />
+    <link rel="stylesheet" href="@Url.Content("~/Content/PhotoProfile.css")" />
+
+    <style>
+        .wrapper {
+            position: relative
+        }
+        .deleteBtn {
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+    </style>
+}
+
+
+
+<div class="container justify-content-center">
+    <br />
+    <br />
+    <br />
+    <div class="g-0 border rounded overflow-hidden flex-md-row mb-4 shadow h-md-250 bg-white">
+        <div class="col p-4 d-flex flex-column text-center">
+            <section id="form-group" class="">
+                @using (Html.BeginForm("Update", "MyProfile", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal justify-content-center", role = "form", enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <h2>Update your Profile Info</h2>
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="container mb-2 border-bottom justify-content-center">
+                <div class="row">
+
+                    <div class="profilepic mx-auto col-12 ">
+                        <div class=" col-6 profilePicture">
+                            @if (System.IO.File.Exists(HttpContext.Current.Server.MapPath($"~/Uploads/{User.Identity.Name}/{Model.ProfilePhoto}")))
+                            {
+                                <img src="@Url.Content("~/Uploads/"+User.Identity.Name+ "/"+ Model.ProfilePhoto)" alt="mdo" height="280" width="419" class=" profilepic__image  ">
+                            }
+                            else
+                            {
+
+                                <img src="@Url.Content("~/Uploads/unknown.png")" alt="mdo" height="280" width="419" class=" profilepic__image ">
+
+                            }
+                        </div>
+                        <div class="profilepic__content profPic">
+                            <span class="profilepic__icon"><i class="fas fa-camera"></i></span>
+                            <span class="profilepic__text">Change Photo</span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="container col-6 justify-content-center">
+                        @Html.HiddenFor(model => model.Id)
+                        <div class="container col-6 mb-4">
+                            <div class="form-floating mx-auto">
+                                @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control", @id = "nameInput", @placeholder = "dumy" } })
+                                @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                                @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @for = "nameInput" })
+                            </div>
+                        </div>
+                        <div class="container col-6 mb-4 ">
+                            <div class="form-floating mx-auto">
+                                @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", @id = "nameInput", @placeholder = "dumy" } })
+                                @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                                @Html.LabelFor(model => model.LastName, htmlAttributes: new { @for = "nameInput" })
+                            </div>
+                        </div>
+                        <div class="container col-6 mb-4 ">
+                            <div class="form-floating mx-auto">
+                                @Html.EditorFor(model => model.Birthdate, new { htmlAttributes = new { @class = "form-control datetime py-2 text-center", @id = "nameInput", @placeholder = "dumy" } })
+                                @Html.ValidationMessageFor(model => model.Birthdate, "", new { @class = "text-danger" })
+                                @Html.LabelFor(model => model.Birthdate, "Change BirthDate", htmlAttributes: new { @class = "control-label text-center mb-2" })
+                            </div>
+                        </div>
+                        <div class="container col-6 mb-4">
+                            <div class="form-floating mx-auto ">
+                                @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control", @id = "nameInput", @placeholder = "dumy" } })
+                                @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                                @Html.LabelFor(model => model.Address, htmlAttributes: new { @for = "nameInput" })
+                            </div>
+                        </div>
+                        <div class="container col-6">
+                            <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                                @Html.RadioButtonFor(m => m.Gender, "Male", new { @class = "mx-auto text-center btn-check", @id = "btncheck1" })
+                                <label class="btn btn-outline-dark" for="btncheck1">Male</label>
+                                @Html.RadioButtonFor(m => m.Gender, "Female", new { @class = "mx-auto text-center btn-check", @id = "btncheck2" })
+                                <label class="btn btn-outline-dark" for="btncheck2">Female</label>
+                                @Html.RadioButtonFor(m => m.Gender, "Other", new { @class = "mx-auto text-center btn-check", @id = "btncheck3" })
+                                <label class="btn btn-outline-dark" for="btncheck3">Other</label>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                </div>
+                <div class="row mx-auto">
+                    <div class="col-12">
+
+                    <button type="button" class="addPic btn btnstyle2">&#10010 Pictures</button>
+                    </div>
+                </div>
+                <div class="modal fade" id="browsePhoto" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <ul>
+
+                                    @for (int i = 0; i < Model.Photos.Count(); i++)
+                                    {
+                                        <li>
+                                            @Html.RadioButtonFor(x => x.ProfilePhoto, Model.Photos[i].Image, new { @class = "mx-auto" })
+                                            <div class="wrapper">
+                                                <img class="imgchk" src="@Url.Content("~/Uploads/"+User.Identity.Name+ "/"+ Model.Photos[i].Image)" height="100" width="100" />
+
+                                                @Html.ActionLink("X", "DeletePhoto", "Photo", new { id = Model.Photos[i].Id }, new { @class = "deleteBtn btnstyle" })
+                                            </div>
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" id="closeModal">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button id="userId" type="button" class="d-none" value="@User.Identity.Name"></button>
+                @*<button class="btn btnstyle2 btnCollapse" type="button" aria-expanded="false" data-bs-toggle="collapse" data-bs-target="#collapsePictures">
+            Pictures
+        </button>*@
+
+                @*<div class="collapse" id="collapsePictures">
+            <div class="card card-body">
+                <div class="col-md-7 me-5 ">
+                    <ul id="myUl">
+
+                        @for (int i = 0; i < Model.Photos.Count(); i++)
+                        {
+                            <li>
+                                @Html.RadioButtonFor(x => x.ProfilePhoto, Model.Photos[i].Image, new { @class = "mx-auto" })
+                                <div class="wrapper">
+                                    <img class="imgchk" src="@Url.Content("~/Uploads/"+User.Identity.Name+ "/"+ Model.Photos[i].Image)" height="100" width="100" />
+
+                                    @Html.ActionLink("X", "DeletePhoto", "Photo", new { id = Model.Photos[i].Id }, new { @class = "deleteBtn btnstyle" })
+                                </div>
+
+
+                            </li>
+                        }
+                    </ul>
+
+                </div>
+            </div>
+        </div>*@
+
+                <div class="modal fade" id="browsePics" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+
+
+                            </div>
+                            <div class="modal-footer">
+                                @*<button type="button" class="btn btn-secondary modalClose" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-offset-2 col-md-10  mx-auto">
+                    <input type="submit" value="Submit" class="w-50 btn text-dark btn-lg btnstyle mt-5 mb-5" />
+                </div>
+
+
+
+
+            </div>
+                }
+            </section>
+        </div>
+    </div>
+    <br />
+    <br />
+    <br />
+    <br />
+</div>
+
+
+
+@section scripts
+    {
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="~/Scripts/PhotoMyProfile.js"></script>
+    <script>
+        //$('#modalBtn').click(function () {
+        //$('#exampleModalCenter').modal('show');
+        //})
+        flatpickr("#BirthDate", {
+            enableTime: false,
+            dateFormat: 'Y-m-d',
+            maxDate: new Date("2008-1-1"),
+            onChange: console.log("changed")
+        });
+
+        $('.btnCollapse').click(function () {
+            $('#collapsePictures').collapse({
+                toggle: false
+            });
+        });
+
+
+        $(".addPic").click(function() {
+            $("#browsePics .modal-body").load(
+             '@Url.Action("Create", "Photo")',
+            function() {
+                $('#browsePics').modal('show');
+                    });
+        });
+
+        //$('.modalClose').click(function () {
+        //    $('#browsePics').modal('close');
+        //});
+        flatpickr(".datetime", {
+            enableTime: false,
+            dateFormat: "d-m-Y",
+        });
+
+        $(".close").click(function () {
+            $("#browsePics").modal('hide')
+        });
+    $(".profPic").click(function () {
+    $("#browsePhoto").modal('show')
+        });
+    $('#closeModal').click(function () {
+        var profilePic = $('input[type=radio][name=ProfilePhoto]:checked').val()
+        var div = $('.profilePicture');
+        var userId = $('#userId').val();
+        console.log(userId);
+        div.empty();
+        var path = "@Url.Content("~/Uploads/")" + userId + "/" + profilePic;
+        div.append("<img src=" + path + "  class='profilepic__image' alt='No Event Profile Picture Selected' />");
+        $('#browsePhoto').modal('hide')
+    });
+        //$('#exampleModalCenter').on('shown.bs.modal', function () {
+        //    $('#exampleModalCenter').trigger('focus')
+        //})
+
+        //$('.photoDelete').click(function () {
+        //    $.ajax({
+        //        url: this.href,
+        //        type: "POST",
+        //        cache: false,
+        //        dataType: "text json",
+        //        data: {  },
+        //        success: function (data) {},
+        //        error: function (xhr, textStatus, errorThrown) {
+        //            alert("failed");
+        //            console.log('STATUS: ' + textStatus + '\nERROR THROWN: ' + errorThrown);
+        //        }
+        //    })
+
+        //})
+
+
+    </script>
+
+
+}

@@ -1,0 +1,93 @@
+﻿
+@{ ViewBag.Title = "Search";
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+@model EventFool.ViewModels.FiltersViewModel
+
+@section style{
+    <link rel="stylesheet" href="@Url.Content("~/Content/Background.css")" />
+    } 
+
+<div class="text-center mt-2 py-3 justify-content-center">
+    <h2 class=" pb-2 font-bold border-bottom ">Search for Events</h2>
+</div>
+<div class="container-md col-lg-7 rounded-3 shadow py-2 my-3" >
+    <div class="input-group mb-3 justify-content-center">
+        <input type="text" class="form-control" placeholder="Go to Location" id="gotolocation">
+        <button class="btn btnstyle text-dark" type="button" id="go"> Go <img src="~/images/geo-alt.svg"/> </button>
+    </div>
+    <div class="row g-3 justify-content-center">
+        <div class="col-3">
+            @Html.LabelFor(model => model)
+            @Html.DropDownListFor(model => model.CategoryId, new SelectList(Model.Categories, "Id", "Name"), "Category", new { @class = "form-select", @style = "background-image:url(/images/card-list.svg);" })
+        </div>
+        <div class="col-3">
+            <select class="form-select" name="day" id="day" style="background-image:url(/images/calendar2-event.svg);">
+                <option value="Day">Day</option>
+                <option value="24">Today</option>
+                <option value="48">Today & Tomorrow</option>
+                <option value="168">This week</option>
+            </select>
+        </div>
+        <div class="col-3">
+            <select class="form-select" name="ticket" id="ticket" style="background-image:url(/images/cash-coin.svg);">
+                <option value="Ticket">Ticket</option>
+                <option value="0.0">Free</option>
+                <option value="20.0"> &lt;=20&euro;</option>
+                <option value="50.0"> &lt;=50&euro;</option>
+                <option value="100.0">&lt;=100&euro;</option>
+                <option value="200.0">&lt;=200&euro;</option>
+            </select>
+        </div>
+    </div>
+    <div class="input-group my-2 justify-content-center">
+        <button class="btn btnstyle text-dark" type="button" id="filters"> Apply filters <img src="~/images/funnel.svg" /> </button>
+    </div>
+</div>
+
+
+<!-- Button trigger modal -->
+<button type="button" id="noresultButton" class="btn btn-primary visually-hidden" data-bs-toggle="modal" data-bs-target="#locationSearch">
+    Launch demo modal
+</button>
+<!-- Modal for no search results -->
+<div class="modal fade" id="locationSearch" tabindex="-1" aria-labelledby="locationSearch" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+               Sorry! <img src="~/images/emoji-frown.svg"/> No results were found for this search.
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container py-4 my-4">
+    <div class="row justify-content-center">
+        <div id="map-container-google" class="col-lg-10 p-1 bg-dark">
+            <div>
+                <div id="map" frameborder="3" allowfullscreen style="width: 100%; height: 600px;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*<div class="col-md-offset-2 col-md-10  mx-auto">
+        <input type="button" value="Submit" id="searchButton" class="w-50 btn text-dark btn-lg btnstyle mt-5 mb-5" />
+    </div>*@
+<div class="container mt-3" id="divAlbum">
+    <div id="partial" class="px-4 py-4" style="display:none">
+        @Html.Partial("_EventsPartial", new List<EventFool.ViewModels.AssociatedEventsViewModel>())
+    </div>
+    </div>
+    @section scripts{
+
+
+        <script async defer
+                src="https://maps.googleapis.com/maps/api/js?key=&libraries=places&callback=initMap"></script>
+        <script src="~/Scripts/MapsAPI.js"></script>
+
+    }
+
+
+

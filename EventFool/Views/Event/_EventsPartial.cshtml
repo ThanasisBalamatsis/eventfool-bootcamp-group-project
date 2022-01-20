@@ -1,0 +1,43 @@
+﻿
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+    @if (Model != null)
+    {
+        foreach (var myEvent in Model)
+        {
+            <div class="col">
+                <div class="card shadow h-100 overflow-hidden text-white  rounded-5 ">
+                     @if (myEvent.ProfilePhoto == null)
+                    {
+                        <img src="@Url.Content("~/Uploads/unknown.png")" height="280" width="419" class="" style=" width:100%" alt="No Event Profile Picture Selected" />
+                    }
+                    else
+                    {
+                        <img src="@Url.Content("~/Uploads/"+myEvent.UserName+ "/"+ myEvent.ProfilePhoto)" height="280" width="419" class="" style=" width:100%" alt="No Event Profile Picture Selected" />
+                    }
+                    <div class="card-body bg-dark text-white fw-bold">
+                        <div class="card-text">@myEvent.Name</div>
+                        <div><small class="text-muted">@myEvent.Description</small></div>
+                        <div><small class="text-muted">@myEvent.StartDate</small></div>
+                        <div class="d-flex justify-content-between align-items-center">
+                        </div>
+                        <div class="btn-group">
+                            @Html.ActionLink("Event Profile", "Details", "Event", new { EventId = myEvent.EventId }, new { @class = "btn btn-sm btn-outline-secondary" })
+
+                            @if (myEvent.TicketPrice == 0)
+                            {
+
+                                @Html.ActionLink("Book for Free", "PaymentWithPaypal", "Ticket", new { EventId = myEvent.EventId }, new { @class = "btn btn-sm btn-outline-secondary" })
+                            }
+                            else
+                            {
+
+                                @Html.ActionLink("Purchase", "PaymentWithPaypal", "Ticket", new { EventId = myEvent.EventId }, new { @class = "btn btn-sm btn-outline-secondary" })
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+
+</div>

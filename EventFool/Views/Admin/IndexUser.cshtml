@@ -1,0 +1,63 @@
+﻿@model IEnumerable<EventFool.Domain.Models.ApplicationUser>
+
+@{
+    ViewBag.Title = "Index User";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section style{
+    <link rel="stylesheet" href="@Url.Content("~/Content/Background.css")" />
+    }
+<h2>Index</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LastName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Address)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Birthdate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Gender)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+    
+    </tr>
+
+    @foreach (var applicationUser in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => applicationUser.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => applicationUser.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => applicationUser.Address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => applicationUser.Birthdate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => applicationUser.Gender)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => applicationUser.Email)
+            </td>
+            <td>
+                @Html.ActionLink("Delete", "DeleteUser", new { id = applicationUser.Id })
+            </td>
+        </tr>
+    }
+
+</table>

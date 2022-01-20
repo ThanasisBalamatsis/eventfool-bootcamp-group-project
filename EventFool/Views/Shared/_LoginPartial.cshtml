@@ -1,0 +1,59 @@
+﻿@using Microsoft.AspNet.Identity
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+        @Html.AntiForgeryToken()
+
+        @*<ul class="nav navbar-nav navbar-right">
+                <li>
+                    <button type="button" class="btn btn-outline-muted  me-2">My Events</button>
+                    @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+                </li>
+                <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+            </ul>*@
+        //"Hello " + User.Identity.GetUserName() + "!"
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
+            @*@Html.Raw("Hello " + User.Identity.GetUserName() + "!")*@
+            @if (User.IsInRole("Admin"))
+            {
+
+                @Html.ActionLink("Admin Platform", "Index", "Admin", routeValues: null, htmlAttributes: new { @class = "btn me-2 text-dark btnstyle" })
+            }
+            @Html.ActionLink("My Events", "Index", "MyEvents", routeValues: null, htmlAttributes: new { @class = "btn me-4 text-dark btnstyle" })
+
+            <div id="profpic" >
+            @Html.Partial("_ProfPic", new EventFool.ViewModels.ProfPicViewModel())
+
+            </div>
+
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle bg-dark" style="border:none;" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                </button>
+
+                <ul class="dropdown-menu dropdown-menu-dark " aria-labelledby="dropdownMenuButton2">
+                    <li>@Html.ActionLink("Search Events", "Search", "Event", routeValues: null, htmlAttributes: new { @class = "dropdown-item" })</li>
+                    <li>@Html.ActionLink("Create Events", "Create", "Event", routeValues: null, htmlAttributes: new { @class = "dropdown-item" })</li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li>@Html.ActionLink("My Profile", "Index", "MyProfile", routeValues: null, htmlAttributes: new { @class = "dropdown-item" })</li>
+                    <li>@Html.ActionLink("Account", "Index", "Manage", routeValues: null, htmlAttributes: new { @class = "dropdown-item" })</li>
+                    <li><a href="javascript:document.getElementById('logoutForm').submit()" class="dropdown-item">Log off</a></li>
+                </ul>
+            </div>
+
+        </nav>
+
+    }
+}
+else
+{
+
+    <div class="text-end me-5">
+        @Html.ActionLink("My Events", "Index", "MyEvents", routeValues: null, htmlAttributes: new { @class = "btn me-2 text-light" })
+        @Html.ActionLink("Sign-up", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "btn text-dark btnstyle me-2" })
+        @Html.ActionLink("Login", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "btn text-dark btnstyle" })
+
+    </div>
+}
+
+

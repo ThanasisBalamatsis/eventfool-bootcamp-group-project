@@ -1,0 +1,63 @@
+﻿@model IEnumerable<EventFool.Domain.Models.Ticket>
+
+@{
+    ViewBag.Title = "Index Ticket";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section style{
+    <link rel="stylesheet" href="@Url.Content("~/Content/Background.css")" />
+}
+<h2>Index</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.QRCode)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Active)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PayPalReference)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EventId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UserId)
+        </th>
+
+    </tr>
+
+    @foreach (var ticket in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => ticket.QRCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => ticket.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => ticket.Active)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => ticket.PayPalReference)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => ticket.EventId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => ticket.UserId)
+            </td>
+
+            <td>
+                @Html.ActionLink("Edit", "EditTicket", new { id = ticket.Id })
+            </td>
+        </tr>
+    }
+
+</table>

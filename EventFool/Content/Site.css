@@ -1,0 +1,94 @@
+﻿body {
+    /*padding-top: 0px;
+    padding-bottom: 0px;*/
+    margin: 0;
+    padding: 0;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+/*Layout*/
+
+.headbg {
+    background-color: rgba(0, 0, 0, .1);
+    border: solid rgba(0, 0, 0, .15);
+    border-width: 1px 0;
+    box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+}
+
+.buttonsrow {
+    height: 800px;
+}
+
+.btnMain {
+    width: 200px;
+}
+
+.btnMain:hover {
+        background-color: #34d186;
+        color: #212529
+    }
+
+
+
+.footerr {
+    height: 200px;
+}
+
+
+
+#Box {
+    background-color: aqua;
+    color: brown;
+    border: 2px solid black;
+}
+
+
+.btnstyle {
+    background-color: #61e4d6; 
+    /*background-color: rgb(4, 156, 167);*/
+    color: white;
+}
+
+    .btnstyle:hover {
+        background-color: #01575d;
+        color: white;
+    }
+/*End Layout*/
+
+
+
+.btnstyle2 {
+    background-color: #f94666;
+    /*background-color: rgb(4, 156, 167);*/
+    color: white;
+    width: fit-content;
+}
+
+    .btnstyle2:hover {
+        background-color: #852133;
+        color: white;
+        width: fit-content;
+    }
+
+.responsive-width {
+    font-size: 3vw;
+}
+

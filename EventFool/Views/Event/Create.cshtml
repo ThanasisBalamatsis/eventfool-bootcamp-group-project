@@ -1,0 +1,354 @@
+﻿
+@model EventFool.ViewModels.EventCreateViewModel
+@{
+    ViewBag.Title = "Create Event";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section style
+{
+    <link rel="stylesheet" href="@Url.Content("~/Content/CreateEvent.css")" type="text/css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/solid.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/svg-with-js.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/dark.css">
+    <link rel="stylesheet" href="@Url.Content("~/Content/Background.css")" />
+    <link rel="stylesheet" href="@Url.Content("~/Content/PhotoProfile.css")" />
+
+}
+
+<div class="container ">
+    <div class="row align-items-center text-center">
+        <div class=" justify-content-center col-12 rounded-3">
+            <section id="form-group" class="">
+                @using (Html.BeginForm("Create", "Event", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal justify-content-center", role = "form" }))
+                {
+                    <div class="rounded-3 shadow ">
+                        @Html.AntiForgeryToken()
+                        <div class=" col-12 text-center d-flex justify-content-center">
+                            <h4 class="my-5">@ViewBag.Title</h4>
+                        </div>
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="container col-12 row">
+                            <div class="col-7 align-content-center">
+                                <div class="profilepic mx-auto container col-8">
+                                    <div id="profilePicture">
+                                        @if (Model.ProfilePhoto == null || Model.ProfilePhoto == "unknown.png")
+                                        {
+                                            <img src="@Url.Content("~/Uploads/unknown.png")" class="profilepic__image" height="280" width="419" style="width:100%" alt="No Event Profile Picture Selected" /> }
+                                        else
+                                        {
+                                            <img src="@Url.Content("~/Uploads/"+User.Identity.Name+ "/"+ Model.ProfilePhoto)" class="profilepic__image" height="280" width="419" alt="No Event Profile Picture Selected" />}
+                                    </div>
+                                    <div class="profilepic__content profPic">
+                                        <span class="profilepic__icon"><i class="fas fa-camera"></i></span>
+                                        <span class="profilepic__text">Change Photo</span>
+                                    </div>
+                                </div>
+                                <div class="form-group mb-3 mx-2 mt-5 mx-auto justify-content-lg-center">
+                                    <div class="justify-content-lg-center   mx-auto ">
+                                        @Html.LabelFor(model => model.StartDate, "Start date", htmlAttributes: new { @class = "control-label  text-center" })
+                                        @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control text-center datetime py-2 mx-auto" } })
+                                        @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group mb-3 mx-2">
+                                    <div class="justify-content-lg-center   mx-auto ">
+                                        @Html.LabelFor(model => model.EndDate, "End date", htmlAttributes: new { @class = "control-label " })
+                                        @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control text-center datetime py-2 mx-auto" } })
+                                        @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
+                                        <span id="errorDate" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="container col-4 justify-content-center">
+                                <div class="col-4 text-center">
+                                    <h5><img src="~/images/card-text.svg" class="text-start" alt="Alternate Text" style="height:30px; width:30px;" /> Basic Info</h5>
+                                </div>
+                                <div class="form-group">
+                                    <div class="mx-2 mb-4">
+                                        <div class="form-floating">
+                                            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", @id = "nameInput", @placeholder = "dumy" } })
+                                            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                                            @Html.LabelFor(model => model.Name, htmlAttributes: new { @for = "nameInput" })
+                                        </div>
+                                    </div>
+                                    <div class="mx-2 mb-4">
+                                        <div class="form-floating">
+                                            @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", @id = "descInput", @placeholder = "dumy" } })
+                                            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                                            @Html.LabelFor(model => model.Description, "Description", htmlAttributes: new { @for = "descInput" })
+                                        </div>
+                                    </div>
+                                    <div class="mx-2 mb-4 ">
+                                        <div class="form-floating">
+                                            @Html.EditorFor(model => model.TicketPrice, new { htmlAttributes = new { @class = "form-control", @id = "ticketPrice", @placeholder = "dumy" } })
+                                            @Html.ValidationMessageFor(model => model.TicketPrice, "", new { @class = "text-danger" })
+                                            @Html.LabelFor(model => model.TicketPrice, "Ticket Price", htmlAttributes: new { @for = "ticketPrice" })
+                                        </div>
+                                    </div>
+                                    <div class=" mx-2 mb-4">
+                                        <div class="form-floating">
+                                            @Html.EditorFor(model => model.MinTickets, new { htmlAttributes = new { @class = "form-control", @id = "minTcikets", @placeholder = "dumy" } })
+                                            @Html.ValidationMessageFor(model => model.MinTickets, "", new { @class = "text-danger" })
+                                            @Html.LabelFor(model => model.MinTickets, "Minimun Tickets", htmlAttributes: new { @for = "minTcikets" })
+                                        </div>
+                                    </div>
+                                    <div class="mx-2 mb-3">
+                                        <div class="form-floating">
+                                            @Html.EditorFor(model => model.MaxTickets, new { htmlAttributes = new { @class = "form-control", @id = "maxTcikets", @placeholder = "dumy" } })
+                                            @Html.ValidationMessageFor(model => model.MaxTickets, "", new { @class = "text-danger" })
+                                            @Html.LabelFor(model => model.MaxTickets, "Maximum Tickets", htmlAttributes: new { @for = "maxTcikets" })
+                                        </div>
+                                    </div>
+                                    <div class="mx-2 mb-4 mb-3">
+                                        @Html.LabelFor(model => model)
+                                        @Html.DropDownListFor(model => model.CategoryId, new SelectList(Model.Categories, "Id", "Name"), "Category", new { @class = "form-select", @style = "background-image:url(/images/card-list.svg);" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="container shadow col-12 my-5 py-3">
+
+                        </div>
+                        <div class="justify-content-center my-4">
+                            <div class="row text-center py-3">
+                                <h5 class="align-text-bottom "><img src="~/images/pin-map.svg" class="text-start" alt="Alternate Text" style="height:30px; width:30px;" /> Location info</h5>
+                            </div>
+                            <div class="mb-3" id="searchBox">
+                                <div class="row ">
+                                    <div class="col-md-7 me-5 ">
+                                        <img width="600" class="ms-5" id="staticMap">
+                                    </div>
+                                    <div class="col-4 justify-content-center">
+                                        <div class="mx-2 mb-3">
+                                            <div class="form-floating">
+                                                <input class="form-control" id="venueInput" type="text" placeholder="dumy">
+                                                <label for="venueInput">Search for a venue or an address</label>
+                                            </div>
+                                        </div>
+                                        <div class="mx-2 mb-3">
+                                            <div class="form-floating">
+                                                @Html.EditorFor(model => model.Location.Name, new { htmlAttributes = new { @class = "form-control", @id = "locName", @placeholder = "dumy" } })
+                                                @Html.ValidationMessageFor(model => model.Location.Name, "", new { @class = "text-danger" })
+                                                @Html.LabelFor(model => model.Location.Name, htmlAttributes: new { @for = "locName" })
+                                            </div>
+                                        </div>
+                                        <div class="mx-2 mb-3">
+                                            <div class="form-floating">
+                                                @Html.EditorFor(model => model.Location.Address, new { htmlAttributes = new { @class = "form-control", @id = "locAddress", @placeholder = "dumy" } })
+                                                @Html.LabelFor(model => model.Location.Address, htmlAttributes: new { @for = "locAddress" })
+                                            </div>
+                                        </div>
+                                        <div class="d-none">
+                                            @Html.EditorFor(model => model.Location.Latitude, new { htmlAttributes = new { @class = "form-control", @id = "locLat", @placeholder = "dumy" } })
+                                        </div>
+                                        <div class="d-none">
+                                            @Html.EditorFor(model => model.Location.Longitude, new { htmlAttributes = new { @class = "form-control", @id = "locLong", @placeholder = "dumy" } })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row rounded-3">
+                            <div class="col-md-7 me-5  ">
+                                <ul id="myUl">
+
+                                    @for (int i = 0; i < Model.Photos.Count(); i++)
+                                    {
+                                        <li>
+                                            @Html.CheckBoxFor(x => x.Photos[i].Checked)
+                                            @Html.HiddenFor(x => x.Photos[i].Id)
+                                            @Html.HiddenFor(x => x.Photos[i].Image)
+                                            <img class="imgchk" src="@Url.Content("~/Uploads/"+User.Identity.Name+ "/"+ Model.Photos[i].Image)" height="100" width="100" />
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                            <div class="col-4 ms-3 ">
+
+                                <button type="button" class="addPic btn btn-lg btnstyle2">&#10010 More Pictures </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group mt-4">
+                    </div>
+                    <div class="upload__box">
+                        <div class="upload__btn-box">
+                        </div>
+                        <div class="upload__img-wrap "></div>
+                        <p class="text-danger">@Html.DisplayFor(model => model.ErrorMessage)</p>
+                        <div class="col-md-offset-2 col-md-10  mx-auto">
+                            <input type="submit" value="Submit" id="subBtn" class="w-50 btn text-dark btn-lg btnstyle mt-5 mb-5" />
+                        </div>
+                        <p class="mb-4">
+                            @Html.ActionLink("Back to List", "Index")
+                        </p>
+
+                    </div>
+
+                    <div class="modal fade" id="browsePics" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Change profile picture</h5>
+                                    @*<button type="button" class="btn-close " data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>*@
+                                </div>
+                                <div class="modal-body">
+                                    <ul>
+                                        @foreach (var pic in Model.Photos)
+                                        {
+                                            <li>
+                                                @Html.RadioButtonFor(model => model.ProfilePhoto, pic.Image, new { @class = "mx-auto" })
+                                                <img class="imgchk" src="@Url.Content("~/Uploads/"+User.Identity.Name+ "/"+ pic.Image)" height="100" width="100" />
+                                            </li>
+                                        }
+                                    </ul>
+
+                                </div>
+                                <div class="modal-footer">
+
+                                    <button type="button" class="btn btn-primary" id="closeModal">Save changes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button id="userId" type="button" class="d-none" value="@User.Identity.Name"></button>
+
+                    <div class="modal fade" id="addpic" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Upload Pictures to user profile</h5>
+
+                                </div>
+                                <div class="modal-body1">
+                                    <ul>
+                                    </ul>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                }
+            </section>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+@section scripts{
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=&libraries=places&callback=initAutocomplete"
+            async defer></script>
+    @*<script src="~/Scripts/jquery.dateFormat.js"></script>*@
+    <script src="~/Scripts/jquery.uploadPhoto.js"></script>
+    <script src="~/Scripts/EventAutocomplete.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+        //let items = document.querySelectorAll('.carousel .carousel-item')
+
+        //items.forEach((el) => {
+        //    const minPerSlide = 4
+        //    let next = el.nextElementSibling
+        //    for (var i = 1; i < minPerSlide; i++) {
+        //        if (!next) {
+        //            // wrap carousel by using first child
+        //            next = items[0]
+        //        }
+        //        let cloneChild = next.cloneNode(true)
+        //        el.appendChild(cloneChild.children[0])
+        //        next = next.nextElementSibling
+        //    }
+        //})
+        function datenowplus() {
+            console.log($("#StartDate").val())
+        }
+        flatpickr("#StartDate", {
+            enableTime: true,
+            dateFormat: "Y-m-d H:i",
+            minDate: Date.now(),
+            defaultDate: [Date.now()],
+            time_24hr: true,
+
+        });
+        var time = new Date($('#StartDate').val())
+        flatpickr("#EndDate", {
+            enableTime: true,
+            dateFormat: "Y-m-d H:i",
+            minDate: time,
+            time_24hr: true,
+            defaultDate: [Date.now()+300000],
+            onChange: function () {
+                const startD =$('#StartDate').val();
+                const endD = $('#EndDate').val();
+                const startDateTime = new Date(startD);
+                const endDateTime = new Date(endD);
+
+                if (startDateTime > endDateTime) {
+                    console.log("Here");
+                    $('#errorDate').html("Start Date cannot be greater than End Date");
+                    $('#subBtn').attr('disabled', 'disabled');
+                } else {
+                    $('#errorDate').html("");
+                    $('#subBtn').removeAttr("disabled");
+                }
+            }
+        });
+
+        function defaultD() {
+            let dateNow;
+            if ($('#EndDate').val() == null) {
+                dateNow = Date.now()
+            }
+            else
+            {
+                dateNow = new Date($('#EndDate').val());
+            }
+            return dateNow
+            }
+
+
+
+        $("#StartDate").change(function () {
+            $("#EndDate").minDate = $("#StartDate").val()
+        });
+
+        $(".addPic").click(function() {
+            $("#addpic .modal-body1").load(
+             '@Url.Action("Create", "Photo")',
+            function() {
+                $('#addpic').modal('show');
+                    });
+        });
+        $(".profPic").click(function () {
+            $("#browsePics").modal('show')
+        });
+        //$("#closeModal").click(function () {
+        //    $('#browsePics').modal('hide')
+        //});
+
+        $('#closeModal').click(function () {
+            var profilePic = $('input[type=radio][name=ProfilePhoto]:checked').val()
+            var div = $('#profilePicture');
+            var userId = $('#userId').val();
+            div.empty();
+            var path = "@Url.Content("~/Uploads/")" + userId + "/" + profilePic;
+            div.append("<img src=" + path +"  class='profilepic__image' alt='No Event Profile Picture Selected' />");
+            $('#browsePics').modal('hide')
+        });
+
+    </script>
+
+}
+

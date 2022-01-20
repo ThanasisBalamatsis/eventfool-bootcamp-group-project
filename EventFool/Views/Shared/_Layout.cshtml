@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @RenderSection("style", required: false)
+   
+    
+</head>
+<body class="d-flex flex-column min-vh-100">
+    <header class="p-3 text-white headbg bg-dark w-100">
+        <div class="container">
+            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                <a href="/" class="d-flex align-items-center  mb-2 mb-lg-0 text-white text-decoration-none me-5">
+                    <img src="/images/logo.png" alt="logo eventfool" style="width:200px ; ">
+                </a>
+
+                <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                    @*<li>@Html.ActionLink("Home", "Index", "Home", new { @class = "btn me-2 text-light" })</li>
+                        <li>@Html.ActionLink("About", "About", "Home", new { @class = "btn  me-2 text-light" })</li>
+                        <li>@Html.ActionLink("Contact", "Contact", "Home", new { @class = "btn me-2 text-light" })</li>*@
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+        @* <img src="/images/marshmellooo.png" alt="Alternate Text" style="height:300px ; width:auto" class="align-items-center justify-content-center"/>*@
+    </header>
+    @RenderBody()
+    <div class="container mw-100 bg-dark mt-auto">
+        <footer class="py-4 relative-bottom bg-light bg-dark">
+            <ul class="nav justify-content-center align-items-center border-bottom pb-3 mb-3">
+                <li class="nav-item"><a href="#" class="nav-link px-2 text-light">Home</a></li>
+                <li class="nav-item"><a href="#" class="nav-link px-2 text-light">Features</a></li>
+                <li class="nav-item"><a href="#" class="nav-link px-2 text-light">Pricing</a></li>
+                <li class="nav-item"><a href="#" class="nav-link px-2 text-light">FAQs</a></li>
+                <li class="nav-item"><a href="#" class="nav-link px-2 text-light">About</a></li>
+            </ul>
+            <p class="text-center text-light">&copy; @DateTime.Now.Year Eventfool Inc.</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+    @*<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>*@
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    @if (Request.IsAuthenticated)
+    {
+        <script>
+            $(document).ready(function () {
+
+                $.ajax({
+                    url: '/Photo/PhotoProfile',
+                    type: "GET",
+                    cache: false,
+                    dataType: 'html',
+                    success: function (pic) {
+                        $("#profpic").html(pic);
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        console.log('STATUS: ' + textStatus + '\nERROR THROWN: ' + errorThrown);
+                    }
+                })
+            });
+        </script>
+    }
+
+
+</body>
+</html>
