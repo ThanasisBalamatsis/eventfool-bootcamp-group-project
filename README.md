@@ -1,5 +1,4 @@
 # eventfool-bootcamp-group-project
-# bootcamp-group-project
 This is the final version of the group project my colleagues and I submitted in the context of PeopleCert's 3-month Coding Bootcamp (C# Stream).
 Our app, called Eventfool, is dedicated to the creation and promotion of events. 
 It is a platform where people can search for any kind of events in a city, on any day they prefer, or create events and attract participants.
